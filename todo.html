@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ToDo</title>
+<style>
+body{text-align:center;font-family:Arial;background:#f4f4f4}
+input{padding:10px}
+button{padding:10px;background:blue;color:white;border:none}
+li{background:white;margin:10px;padding:10px}
+.done{text-decoration:line-through}
+</style>
+</head>
+<body>
+
+<h1>To-Do App</h1>
+<input id="taskInput">
+<button onclick="addTask()">Add</button>
+
+<ul id="list"></ul>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function render(){
+let list = document.getElementById("list");
+list.innerHTML="";
+tasks.forEach((t,i)=>{
+let li=document.createElement("li");
+li.textContent=t.text;
+if(t.done) li.classList.add("done");
+
+li.onclick=()=>{t.done=!t.done;save();}
+
+let del=document.createElement("button");
+del.textContent="X";
+del.onclick=(e)=>{e.stopPropagation();tasks.splice(i,1);save();}
+
+li.appendChild(del);
+list.appendChild(li);
+});
+}
+
+function addTask(){
+let input=document.getElementById("taskInput");
+if(input.value==="") return;
+tasks.push({text:input.value,done:false});
+input.value="";
+save();
+}
+
+function save(){
+localStorage.setItem("tasks",JSON.stringify(tasks));
+render();
+}
+
+render();
+</script>
+
+</body>
+</html>
