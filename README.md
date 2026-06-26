@@ -7,4 +7,4 @@ Projects:
 - Calculator
 
 Technologies:
-HTML, CSS, JavaScript
+HTML, CSS, JavaScript 
